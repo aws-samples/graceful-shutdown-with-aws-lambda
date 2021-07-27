@@ -45,7 +45,7 @@ Take note of the output value of HelloWorldApi. Use curl to invoke the api and t
 curl "replace this with value of HelloWorldApi"
 ```
 
-Waite for serveral minutes, check the function's log messages in CloudWatch. You will see logs contains "SIGTERM received". It works!
+Waite for serveral minutes, check the function's log messages in CloudWatch. If you see a log line containing "SIGTERM received", it works!
 
 ```
 2021/07/27/[$LATEST]0a35efaafbd24ecc9a5f4fad2dd94b49 2021-07-27T03:47:27.635000 START RequestId: 1aac889c-ccaf-4655-9ad1-018e464ab75d Version: $LATEST
