@@ -8,7 +8,7 @@ For a function with external extensions, Lambda reserves up to 300 ms (500 ms fo
 
 If the runtime or an extension does not respond to the Shutdown event within the limit, Lambda ends the process using a SIGKILL signal.
 
-![lambda extension shutdown phase](https://docs.aws.amazon.com/lambda/latest/dg/images/Shutdown-Phase.png)
+![lambda extension shutdown phase](images/lambda-extension-shutdown-phase.png)
 
 
 ## Demos
