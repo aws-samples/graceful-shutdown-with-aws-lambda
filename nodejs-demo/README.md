@@ -1,6 +1,6 @@
 # Node.js demo
 
-This folder contains a simple python function with CloudWatch Lambda Insight enabled. CloudWatch Lambda Insight is monitoring and troubleshooting solution for serverless applicaiton. Its agent is an external extension. Any external extension will work. We use Lambda Insight because it is already avaiable.
+This folder contains a simple node.js function with CloudWatch Lambda Insight enabled. CloudWatch Lambda Insight is monitoring and troubleshooting solution for serverless applicaiton. Its agent is an external extension. Any external extension will work. We use Lambda Insight because it is already avaiable.
 
 ```yaml
     Properties:
