@@ -1,4 +1,4 @@
-# Graceful shutdown with Lambda Extension
+# Graceful shutdown with AWS Lambda
 
 AWS Lambda allows developers to run their code without managing servers, automatic scaling and pay for value. Many developers use Lambda to connect with databases and Redis. But when a Lambda execution environment shuts down, the connections remain open and hold up backend resources. Databases ususally can clean those idle connections after timeout. However, developers want to gracefully clean up those connections when Lambda execution environment shuts down. Now, this can be achieved with Lambda Extensions.
 
