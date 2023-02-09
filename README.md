@@ -18,3 +18,7 @@ This repo includes three examples. Please see the details in each demo folder.
 - [Node.js Demo](nodejs-demo/)
 - [Python Demo](python-demo/)
 - [Java Demo](java-demo/)
+
+## Note
+
+Please be aware that this function does not work on Python 3.8 and 3.9 runtimes. 
