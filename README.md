@@ -21,4 +21,4 @@ This repo includes three examples. Please see the details in each demo folder.
 
 ## Note
 
-Please be aware that this function does not work on Python 3.8 and 3.9 runtimes. 
+Please be aware that this feature does not work on Python 3.8 and 3.9 runtimes. 
