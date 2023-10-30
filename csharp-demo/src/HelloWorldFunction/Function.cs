@@ -18,12 +18,12 @@ public class Function
     /// <returns></returns>
     public string? FunctionHandler(APIGatewayProxyRequest request, ILambdaContext context)
     {
-        PosixSignalRegistration.Create(PosixSignal.SIGTERM, Handler);
+        PosixSignalRegistration.Create(PosixSignal.SIGTERM, SignalHandler);
         
         return request.Body?.ToUpper();
     }
 
-    private void Handler(PosixSignalContext obj)
+    private void SignalHandler(PosixSignalContext obj)
     {
        Console.WriteLine("[runtime] SIGTERM received stopping the application");
        Console.WriteLine("[runtime] Cleaning up");
