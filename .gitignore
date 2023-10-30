@@ -1,7 +1,9 @@
 .aws-sam
 samconfig.toml
-.idea
+.idea/
 .vscode
+.bin/
+.obj/
 
 target
 .settings
