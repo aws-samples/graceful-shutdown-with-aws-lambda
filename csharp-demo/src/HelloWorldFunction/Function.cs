@@ -10,6 +10,10 @@ namespace HelloWorldFunction;
 
 public class Function
 {
+    public Function()
+    {
+        PosixSignalRegistration.Create(PosixSignal.SIGTERM, SignalHandler);
+    }
     /// <summary>
     /// A simple function that takes a string and does a ToUpper
     /// </summary>
@@ -17,9 +21,7 @@ public class Function
     /// <param name="context"></param>
     /// <returns></returns>
     public string? FunctionHandler(APIGatewayProxyRequest request, ILambdaContext context)
-    {
-        PosixSignalRegistration.Create(PosixSignal.SIGTERM, SignalHandler);
-        
+    {   
         return request.Body?.ToUpper();
     }
 
