@@ -1,0 +1,40 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: .NET Lambda Demo
+
+Globals:
+  Function:
+    Timeout: 20
+
+Resources:
+  HelloWorldFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/HelloWorldFunction
+      Handler: HelloWorldFunction::HelloWorldFunction.Function::FunctionHandler
+      Runtime: dotnet6
+      MemorySize: 512
+      Layers:
+        - !Sub arn:aws:lambda:${AWS::Region}:580247275435:layer:LambdaInsightsExtension:14
+      Policies:
+        - CloudWatchLambdaInsightsExecutionRolePolicy
+      Events:
+        HelloWorld:
+          Type: Api
+          Properties:
+            Path: /hello
+            Method: get
+
+Outputs:
+  HelloWorldFunctionApi:
+    Description: "API Gateway endpoint URL for Prod stage for HelloWorldFunction"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
+  HelloWorldFunctionArn:
+    Description: "HelloWorldFunction Lambda Function ARN"
+    Value: !GetAtt MyDotNetFunction.Arn
+  HelloWorldFunctionnIamRole:
+    Description: "Implicit IAM Role created for HelloWorldFunction"
+    Value: !GetAtt MyDotNetFunctionRole.Arn
+  
+  
+  

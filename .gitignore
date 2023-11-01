@@ -1,5 +1,6 @@
 .aws-sam
 samconfig.toml
+.idea
 .vscode
 
 target
