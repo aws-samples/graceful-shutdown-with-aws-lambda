@@ -31,10 +31,10 @@ Outputs:
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
   HelloWorldFunctionArn:
     Description: "HelloWorldFunction Lambda Function ARN"
-    Value: !GetAtt MyDotNetFunction.Arn
+    Value: !GetAtt HelloWorldFunction.Arn
   HelloWorldFunctionnIamRole:
     Description: "Implicit IAM Role created for HelloWorldFunction"
-    Value: !GetAtt MyDotNetFunctionRole.Arn
+    Value: !GetAtt HelloWorldFunctionRole.Arn
   
   
   
