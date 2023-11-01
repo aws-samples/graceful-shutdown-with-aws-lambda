@@ -42,13 +42,13 @@ sam build --use-container
 sam deploy --guided 
 ```
 
-Take note of the output value of HelloWorldApi. Use curl to invoke the api and trigger the lambda function once.
+Take note of the output value of HelloWorldFunctionApi. Use curl to invoke the api and trigger the lambda function once.
 
 ```bash
-curl "replace this with value of HelloWorldApi"
+curl "replace this with value of HelloWorldFunctionApi"
 ```
 
-Waite for serveral minutes, check the function's log messages in CloudWatch. If you see a log line containing "SIGTERM received", it works!
+Wait for several minutes, check the function's log messages in CloudWatch. If you see a log line containing "SIGTERM received", it works!
 
 ```
 2021/07/28/[$LATEST]7b4ab412d2494617934d9cd408d8f8a8 2021-07-28T06:15:05.879000 START RequestId: abdd9973-487b-4293-93e5-ed230703cab0 Version: $LATEST

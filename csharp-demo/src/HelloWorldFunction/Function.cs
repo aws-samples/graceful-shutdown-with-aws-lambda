@@ -20,9 +20,13 @@ public class Function
     /// <param name="request"></param>
     /// <param name="context"></param>
     /// <returns></returns>
-    public string? FunctionHandler(APIGatewayProxyRequest request, ILambdaContext context)
-    {   
-        return request.Body?.ToUpper();
+    public APIGatewayProxyResponse FunctionHandler(APIGatewayProxyRequest request, ILambdaContext context)
+    {
+        return new APIGatewayProxyResponse
+        {
+            StatusCode = 200,
+            Body = "Hello world!",
+        };
     }
 
     private void SignalHandler(PosixSignalContext obj)

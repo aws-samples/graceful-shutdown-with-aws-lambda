@@ -11,11 +11,11 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: src/HelloWorldFunction
-      Handler: HelloWorld.Function::FunctionHandler
+      Handler: HelloWorldFunction::HelloWorldFunction.Function::FunctionHandler
       Runtime: dotnet6
       MemorySize: 512
       Layers:
-        - arn:aws:lambda:${AWS::Region}:580247275435:layer:LambdaInsightsExtension:14
+        - !Sub arn:aws:lambda:${AWS::Region}:580247275435:layer:LambdaInsightsExtension:14
       Policies:
         - CloudWatchLambdaInsightsExecutionRolePolicy
       Events:
@@ -26,14 +26,14 @@ Resources:
             Method: get
 
 Outputs:
-  MyDotNetFunctionApi:
-    Description: "API Gateway endpoint URL for Prod stage for MyDotNetFunction"
+  HelloWorldFunctionApi:
+    Description: "API Gateway endpoint URL for Prod stage for HelloWorldFunction"
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
-  MyDotNetFunctionArn:
-    Description: "MyDotNetFunction Lambda Function ARN"
+  HelloWorldFunctionArn:
+    Description: "HelloWorldFunction Lambda Function ARN"
     Value: !GetAtt MyDotNetFunction.Arn
-  MyDotNetFunctionIamRole:
-    Description: "Implicit IAM Role created for MyDotNetFunction"
+  HelloWorldFunctionnIamRole:
+    Description: "Implicit IAM Role created for HelloWorldFunction"
     Value: !GetAtt MyDotNetFunctionRole.Arn
   
   
