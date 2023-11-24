@@ -38,7 +38,7 @@ sam build --beta-features
 sam deploy
 ```
 
-Take note of the output value of HelloWorldApi. Use curl to invoke the api and trigger the lambda function once.
+Take note of the output value of `RustHelloWorldApi`. Use curl to invoke the api and trigger the lambda function once.
 
 ```bash
 curl "replace this with value of RustHelloWorldApi"
@@ -47,23 +47,23 @@ curl "replace this with value of RustHelloWorldApi"
 Waite for several minutes, check the function's log messages in CloudWatch. If you see a log line containing "SIGTERM
 received", it works!
 
+for example:
+![](./docs/images/rust-2023-11-24.png)
 ```text
-2023-11-24T10:24:42.205+08:00	INIT_START Runtime Version: provided:al2.v27 Runtime Version ARN: arn:aws:lambda:us-east-1::runtime:2314d913d88add4107e4119c38e7eff2379525a1b70c242c2fbbd5f44af167a2
-2023-11-24T10:24:42.265+08:00	LOGS Name: cloudwatch_lambda_agent State: Subscribed Types: [Platform]
-2023-11-24T10:24:42.296+08:00	EXTENSION Name: cloudwatch_lambda_agent State: Ready Events: [INVOKE, SHUTDOWN]
-2023-11-24T10:24:42.299+08:00	START RequestId: 18045be4-4e12-4d7f-a24b-356669594272 Version: $LATEST
-2023-11-24T10:24:42.355+08:00	END RequestId: 18045be4-4e12-4d7f-a24b-356669594272
-2023-11-24T10:24:42.355+08:00	REPORT RequestId: 18045be4-4e12-4d7f-a24b-356669594272 Duration: 56.12 ms Billed Duration: 149 ms Memory Size: 128 MB Max Memory Used: 26 MB Init Duration: 92.32 ms
-2023-11-24T10:25:41.020+08:00	START RequestId: bf4b4661-feed-4054-9e47-f007f21399bb Version: $LATEST
-2023-11-24T10:25:41.035+08:00	END RequestId: bf4b4661-feed-4054-9e47-f007f21399bb
-2023-11-24T10:25:41.035+08:00	REPORT RequestId: bf4b4661-feed-4054-9e47-f007f21399bb Duration: 15.18 ms Billed Duration: 16 ms Memory Size: 128 MB Max Memory Used: 26 MB
-2023-11-24T10:25:43.584+08:00	START RequestId: 756e997d-d1f4-40a1-a198-7b5cbd75b8b3 Version: $LATEST
-2023-11-24T10:25:43.595+08:00	END RequestId: 756e997d-d1f4-40a1-a198-7b5cbd75b8b3
-2023-11-24T10:25:43.595+08:00	REPORT RequestId: 756e997d-d1f4-40a1-a198-7b5cbd75b8b3 Duration: 10.92 ms Billed Duration: 11 ms Memory Size: 128 MB Max Memory Used: 26 MB
-2023-11-24T10:32:23.118+08:00	[runtime] SIGTERM received,signal number: 15
-2023-11-24T10:32:23.118+08:00	[runtime] Graceful shutdown in progress ...
-2023-11-24T10:32:23.118+08:00	[runtime] Graceful shutdown completed 
+2023-11-24T11:26:49.725+08:00	INIT_START Runtime Version: provided:al2023.v9 Runtime Version ARN: arn:aws:lambda:us-east-1::runtime:68313de216b90a01e19138b97177c40478ef50b63a22b29f152b960070428ae8
+2023-11-24T11:26:49.795+08:00	LOGS Name: cloudwatch_lambda_agent State: Subscribed Types: [Platform]
+2023-11-24T11:26:49.817+08:00	EXTENSION Name: cloudwatch_lambda_agent State: Ready Events: [SHUTDOWN, INVOKE]
+2023-11-24T11:26:49.835+08:00	START RequestId: 1851d499-8469-4b3c-80e0-c8cf907d5e64 Version: $LATEST
+2023-11-24T11:26:49.915+08:00	END RequestId: 1851d499-8469-4b3c-80e0-c8cf907d5e64
+2023-11-24T11:26:49.915+08:00	REPORT RequestId: 1851d499-8469-4b3c-80e0-c8cf907d5e64 Duration: 79.88 ms Billed Duration: 172 ms Memory Size: 128 MB Max Memory Used: 26 MB Init Duration: 91.80 ms
+2023-11-24T11:27:02.564+08:00	START RequestId: 10553e5e-dedd-4c5f-b458-8d7aef95b816 Version: $LATEST
+2023-11-24T11:27:02.575+08:00	END RequestId: 10553e5e-dedd-4c5f-b458-8d7aef95b816
+2023-11-24T11:27:02.575+08:00	REPORT RequestId: 10553e5e-dedd-4c5f-b458-8d7aef95b816 Duration: 10.78 ms Billed Duration: 11 ms Memory Size: 128 MB Max Memory Used: 26 MB
+2023-11-24T11:33:28.375+08:00	[runtime] SIGTERM received,signal number: 15
+2023-11-24T11:33:28.375+08:00	[runtime] Graceful shutdown in progress ...
+2023-11-24T11:33:28.375+08:00	[runtime] Graceful shutdown completed 
 ```
+
 
 ## Tested Runtimes
 
