@@ -9,7 +9,6 @@ stack_name = "rust-graceful-shutdown-demo"
 [default.build.parameters]
 cached = true
 parallel = true
-#
 beta_features = true
 
 [default.validate.parameters]
