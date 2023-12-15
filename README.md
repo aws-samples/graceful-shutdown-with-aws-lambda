@@ -13,7 +13,7 @@ If the runtime or an extension does not respond to the Shutdown event within the
 
 ## Demos
 
-This repo includes three examples. Please see the details in each demo folder. 
+This repo includes four examples. Please see the details in each demo folder. 
 
 - [Node.js Demo](nodejs-demo/)
 - [Python Demo](python-demo/)
