@@ -1,6 +1,6 @@
 # Python demo
 
-> ❗ **WARNING:** Graceful shutdown using SIGTERM is currently only compatible with python 3.12. See #2
+> ❗ **WARNING:** Graceful shutdown using SIGTERM is currently only compatible with python 3.7 and 3.12 runtimes. See #2
 
 This folder contains a simple python function with CloudWatch Lambda Insight enabled. CloudWatch Lambda Insight is monitoring and troubleshooting solution for serverless applicaiton. Its agent is an external extension. Any external extension will work. We use Lambda Insight extension simply because it is readily available.
 
