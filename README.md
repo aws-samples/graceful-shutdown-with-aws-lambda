@@ -19,6 +19,8 @@ This repo includes four examples. Please see the details in each demo folder.
 - [Python Demo](python-demo/)
 - [Java Demo](java-demo/)
 - [C# Demo](csharp-demo/)
+- [Rust Demo](rust-demo/)
+- [Golang Demo](golang-demo/)
 
 ## Note
 
