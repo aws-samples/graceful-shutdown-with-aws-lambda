@@ -7,23 +7,31 @@ This folder contains a simple python function with CloudWatch Lambda Insight ena
 ```yaml
     Properties:
       Layers:
-        - !Sub "arn:aws:lambda:${AWS::Region}:580247275435:layer:LambdaInsightsExtension:14" # Add Lambda Insight Extension
+        # Add Lambda Insight Extension: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Lambda-Insights-extension-versions.html
+        - !Sub "arn:aws:lambda:${AWS::Region}:580247275435:layer:LambdaInsightsExtension-Arm64:5"
       Policies:
-        - CloudWatchLambdaInsightsExecutionRolePolicy # Add IAM Permission for Lambda Insight Extension
+        # Add IAM Permission for Lambda Insight Extension
+        - CloudWatchLambdaInsightsExecutionRolePolicy
 ```
 
-In the function, a simple SIGTERM signal handler is added. It will be executed when the lambda runtime receives a SIGTERM signal.
+In the function, a simple `SIGTERM` signal handler is added. It will be executed when the lambda runtime receives a `SIGTERM` signal.
 
 ```python
-def exit_gracefully(signum, frame): 
+def exit_gracefully(signum, frame):
+    r"""
+    SIGTERM Handler: https://docs.aws.amazon.com/lambda/latest/operatorguide/static-initialization.html
+    Listening for os signals that can be handled,reference: https://docs.aws.amazon.com/lambda/latest/dg/runtimes-extensions-api.html
+    Termination Signals: https://www.gnu.org/software/libc/manual/html_node/Termination-Signals.html
+    """
     print("[runtime] SIGTERM received")
 
     print("[runtime] cleaning up")
-    # perform actual clean up work here. 
+    # perform actual clean up work here.
     time.sleep(0.2)
 
     print("[runtime] exiting")
     sys.exit(0)
+
 
 signal.signal(signal.SIGTERM, exit_gracefully)
 
@@ -36,21 +44,42 @@ sam build --use-container
 sam deploy --guided 
 ```
 
-Take note of the output value of HelloWorldApi. Use curl to invoke the api and trigger the lambda function once.
+Take note of the output value of HelloWorldApi. Use curl to invoke the api and trigger the lambda function at least once.
 
 ```bash
 curl "replace this with value of HelloWorldApi"
 ```
 
-Waite for serveral minutes, check the function's log messages in CloudWatch. If you see a log line containing "SIGTERM received", it works!
+Waite for serveral minutes, check the function's log messages in CloudWatch. If you see a log line containing "SIGTERM
+received", it works!
 
+for example:
+![](./docs/images/python3-2023-12-15.png)
 ```
-2021/07/28/[$LATEST]7b4ab412d2494617934d9cd408d8f8a8 2021-07-28T06:15:05.879000 START RequestId: abdd9973-487b-4293-93e5-ed230703cab0 Version: $LATEST
-2021/07/28/[$LATEST]7b4ab412d2494617934d9cd408d8f8a8 2021-07-28T06:15:06.004000 LOGS    Name: cloudwatch_lambda_agent   State: Subscribed       Types: [platform]
-2021/07/28/[$LATEST]7b4ab412d2494617934d9cd408d8f8a8 2021-07-28T06:15:06.004000 EXTENSION       Name: cloudwatch_lambda_agent   State: Ready    Events: [INVOKE,SHUTDOWN]
-2021/07/28/[$LATEST]7b4ab412d2494617934d9cd408d8f8a8 2021-07-28T06:15:06.073000 END RequestId: abdd9973-487b-4293-93e5-ed230703cab0
-2021/07/28/[$LATEST]7b4ab412d2494617934d9cd408d8f8a8 2021-07-28T06:15:06.073000 REPORT RequestId: abdd9973-487b-4293-93e5-ed230703cab0  Duration: 67.61 ms      Billed Duration: 68 ms  Memory Size: 128 MB     Max Memory Used: 64 MB  Init Duration: 201.85 ms
-2021/07/28/[$LATEST]7b4ab412d2494617934d9cd408d8f8a8 2021-07-28T06:21:05.739000 [runtime] SIGTERM received
-2021/07/28/[$LATEST]7b4ab412d2494617934d9cd408d8f8a8 2021-07-28T06:21:05.739000 [runtime] cleaning up
-2021/07/28/[$LATEST]7b4ab412d2494617934d9cd408d8f8a8 2021-07-28T06:21:05.939000 [runtime] exiting
+2023-12-15T14:48:34.955+08:00	INIT_START Runtime Version: python:3.12.v16 Runtime Version ARN: arn:aws:lambda:us-east-1::runtime:5eaca0ecada617668d4d59f66bf32f963e95d17ca326aad52b85465d04c429f5
+2023-12-15T14:48:35.021+08:00	LOGS Name: cloudwatch_lambda_agent State: Subscribed Types: [Platform]
+2023-12-15T14:48:35.130+08:00	EXTENSION Name: cloudwatch_lambda_agent State: Ready Events: [INVOKE, SHUTDOWN]
+2023-12-15T14:48:35.131+08:00	START RequestId: 19234f5f-b2f8-4a9e-b7da-641ef9b4a181 Version: $LATEST
+2023-12-15T14:48:35.171+08:00	END RequestId: 19234f5f-b2f8-4a9e-b7da-641ef9b4a181
+2023-12-15T14:48:35.171+08:00	REPORT RequestId: 19234f5f-b2f8-4a9e-b7da-641ef9b4a181 Duration: 39.75 ms Billed Duration: 40 ms Memory Size: 128 MB Max Memory Used: 45 MB Init Duration: 175.18 ms
+2023-12-15T14:48:37.515+08:00	START RequestId: a20821af-2040-4aa5-9908-09ec9aec0279 Version: $LATEST
+2023-12-15T14:48:37.531+08:00	END RequestId: a20821af-2040-4aa5-9908-09ec9aec0279
+2023-12-15T14:48:37.531+08:00	REPORT RequestId: a20821af-2040-4aa5-9908-09ec9aec0279 Duration: 16.06 ms Billed Duration: 17 ms Memory Size: 128 MB Max Memory Used: 45 MB
+2023-12-15T14:54:28.850+08:00	[runtime] SIGTERM received
+2023-12-15T14:54:28.850+08:00	[runtime] cleaning up
+2023-12-15T14:54:29.051+08:00	[runtime] exiting 
 ```
+
+
+## Tested Runtimes
+
+| language version       | Identifier                                            | Operating system  | Architectures    | Support status |
+|------------------------|-------------------------------------------------------|-------------------|------------------|----------------|
+| Python 3.12            | python3.12                                            | Amazon Linux 2023 | arm64<br/>x86_64 | ✅ Support      |
+| Python 3.11 or earlier | python3.11<br/>python3.10<br/>python3.9<br/>python3.8 | Amazon Linux 2    | arm64<br/>x86_64 | ❌ NOT Support  |
+
+## Reference:
+
+- [Building Lambda functions with Python](https://docs.aws.amazon.com/lambda/latest/dg/lambda-python.html)
+- [Python 3.12 runtime now available in AWS Lambda](https://aws.amazon.com/cn/blogs/compute/python-3-12-runtime-now-available-in-aws-lambda/)
+- [AWS SAM Documentation](https://docs.aws.amazon.com/serverless-application-model/)
