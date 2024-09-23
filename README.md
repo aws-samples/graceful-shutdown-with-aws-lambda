@@ -13,7 +13,7 @@ If the runtime or an extension does not respond to the Shutdown event within the
 
 ## Demos
 
-This repo includes four examples. Please see the details in each demo folder. 
+This repo includes seven examples. Please see the details in each demo folder.
 
 - [Node.js Demo](nodejs-demo/)
 - [Python Demo](python-demo/)
@@ -21,8 +21,8 @@ This repo includes four examples. Please see the details in each demo folder.
 - [C# Demo](csharp-demo/)
 - [Rust Demo](rust-demo/)
 - [Golang Demo](golang-demo/)
+- [Ruby Demo](ruby-demo/)
 
 ## Note
 
-Please be aware that this feature does not work on Python 3.8 through 3.11 runtimes. Please use Python 3.12 runtime for this feature. 
-
+Please be aware that this feature does not work on Python 3.8 through 3.11 runtimes. Please use Python 3.12 runtime for this feature.
