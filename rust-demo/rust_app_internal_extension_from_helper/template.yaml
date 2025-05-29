@@ -1,9 +1,9 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >
-  rust-graceful-shutdown-demo
+  rust-graceful-shutdown-demo-internal-extension
 
-  lambda  graceful shutdown-demo(rust edition)
+  lambda  graceful shutdown-demo(rust edition with internal extension)
 
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
@@ -17,18 +17,12 @@ Resources:
     Metadata:
       BuildMethod: rust-cargolambda # More info about Cargo Lambda: https://github.com/cargo-lambda/cargo-lambda
     Properties:
-      FunctionName: graceful-shutdown-rust
-      CodeUri: ./rust_app   # Points to dir of Cargo.toml
+      FunctionName: graceful-shutdown-rust-internal-extension
+      CodeUri: .   # Points to dir of Cargo.toml
       Handler: bootstrap
       Runtime: provided.al2023
       Architectures:
         - arm64
-      Layers:
-        # Add Lambda Insight Extension: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Lambda-Insights-extension-versions.html
-        - !Sub "arn:aws:lambda:${AWS::Region}:580247275435:layer:LambdaInsightsExtension-Arm64:5"
-      Policies:
-        # Add IAM Permission for Lambda Insight Extension
-        - CloudWatchLambdaInsightsExecutionRolePolicy
       Events:
         HelloWorld:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api

@@ -1,0 +1,12 @@
+[package]
+name = "ru-test"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[dependencies]
+lambda_runtime = "0.14"
+serde = "1.0.136"
+tokio = { version = "1", features = ["full"] }
+aws_lambda_events = { version = "0.16", default-features = false, features = ["apigw", "alb"] }
+serde_json = "1.0.108"

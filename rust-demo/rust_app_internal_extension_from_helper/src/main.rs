@@ -1,10 +1,11 @@
 use std::collections::HashMap;
 
 use aws_lambda_events::apigw::ApiGatewayProxyRequest;
-use lambda_runtime::{Error, LambdaEvent, run, service_fn};
+use lambda_runtime::{
+    run, service_fn, spawn_graceful_shutdown_handler, tracing, Error, LambdaEvent,
+};
 use serde::{Deserialize, Serialize};
 use serde_json::json;
-use tokio::signal::unix::{signal, SignalKind};
 
 /// This is a made-up example. Requests come into the runtime as unicode
 /// strings in json format, which can map to any structure that implements `serde::Deserialize`
@@ -17,8 +18,9 @@ struct Request {}
 /// to be serialized into json. The runtime pays no attention
 /// to the contents of the response payload.
 #[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
 struct Response {
-    statusCode: i32,
+    status_code: i32,
     body: String,
 }
 
@@ -30,7 +32,13 @@ struct Response {
 async fn function_handler(event: LambdaEvent<ApiGatewayProxyRequest>) -> Result<Response, Error> {
     // Prepare the response payload
     let mut payload = HashMap::new();
-    let source_ip = &*(event.payload.request_context.identity.source_ip.unwrap().to_string());
+    let source_ip = &*(event
+        .payload
+        .request_context
+        .identity
+        .source_ip
+        .unwrap()
+        .to_string());
     payload.insert("message", "hello rust");
     payload.insert("source ip", source_ip);
     payload.insert("architecture", std::env::consts::ARCH);
@@ -38,9 +46,10 @@ async fn function_handler(event: LambdaEvent<ApiGatewayProxyRequest>) -> Result<
     // Prepare the response
     let body_content = json!(payload).to_string();
     let resp = Response {
-        statusCode: 200,
+        status_code: 200,
         body: body_content,
     };
+    tracing::info!("returning payload: {payload:#?}");
 
     // Return `Response` (it will be serialized to JSON automatically by the runtime)
     Ok(resp)
@@ -48,35 +57,12 @@ async fn function_handler(event: LambdaEvent<ApiGatewayProxyRequest>) -> Result<
 
 #[tokio::main]
 async fn main() -> Result<(), Error> {
-    tracing_subscriber::fmt()
-        .with_max_level(tracing::Level::INFO)
-        // disable printing the name of the module in every log line.
-        .with_target(false)
-        // disabling time is handy because CloudWatch will add the ingestion time.
-        .without_time()
-        .init();
+    tracing::init_default_subscriber();
 
-    // Handle SIGTERM signal:
-    // https://tokio.rs/tokio/topics/shutdown
-    // https://rust-cli.github.io/book/in-depth/signals.html
-    tokio::spawn(async move {
-        let mut sigint = signal(SignalKind::interrupt()).unwrap();
-        let mut sigterm = signal(SignalKind::terminate()).unwrap();
-        tokio::select! {
-            _sigint = sigint.recv() => {
-                println!("[runtime] SIGINT received");
-                println!("[runtime] Graceful shutdown in progress ...");
-                println!("[runtime] Graceful shutdown completed");
-                std::process::exit(0);
-            },
-            _sigterm = sigterm.recv()=> {
-                println!("[runtime] SIGTERM received");
-                println!("[runtime] Graceful shutdown in progress ...");
-                println!("[runtime] Graceful shutdown completed");
-                std::process::exit(0);
-            },
-        }
-    });
+    spawn_graceful_shutdown_handler(|| async move {
+        eprintln!("my custom shutdown logic");
+    })
+    .await;
 
     run(service_fn(function_handler)).await
 }
